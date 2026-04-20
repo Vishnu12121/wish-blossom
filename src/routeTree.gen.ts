@@ -9,8 +9,32 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WishesRouteImport } from './routes/wishes'
+import { Route as StoryRouteImport } from './routes/story'
+import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as CountdownRouteImport } from './routes/countdown'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WishesRoute = WishesRouteImport.update({
+  id: '/wishes',
+  path: '/wishes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StoryRoute = StoryRouteImport.update({
+  id: '/story',
+  path: '/story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CountdownRoute = CountdownRouteImport.update({
+  id: '/countdown',
+  path: '/countdown',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +43,72 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/countdown': typeof CountdownRoute
+  '/gallery': typeof GalleryRoute
+  '/story': typeof StoryRoute
+  '/wishes': typeof WishesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/countdown': typeof CountdownRoute
+  '/gallery': typeof GalleryRoute
+  '/story': typeof StoryRoute
+  '/wishes': typeof WishesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/countdown': typeof CountdownRoute
+  '/gallery': typeof GalleryRoute
+  '/story': typeof StoryRoute
+  '/wishes': typeof WishesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/countdown' | '/gallery' | '/story' | '/wishes'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/countdown' | '/gallery' | '/story' | '/wishes'
+  id: '__root__' | '/' | '/countdown' | '/gallery' | '/story' | '/wishes'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CountdownRoute: typeof CountdownRoute
+  GalleryRoute: typeof GalleryRoute
+  StoryRoute: typeof StoryRoute
+  WishesRoute: typeof WishesRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wishes': {
+      id: '/wishes'
+      path: '/wishes'
+      fullPath: '/wishes'
+      preLoaderRoute: typeof WishesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/story': {
+      id: '/story'
+      path: '/story'
+      fullPath: '/story'
+      preLoaderRoute: typeof StoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/countdown': {
+      id: '/countdown'
+      path: '/countdown'
+      fullPath: '/countdown'
+      preLoaderRoute: typeof CountdownRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +121,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CountdownRoute: CountdownRoute,
+  GalleryRoute: GalleryRoute,
+  StoryRoute: StoryRoute,
+  WishesRoute: WishesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
